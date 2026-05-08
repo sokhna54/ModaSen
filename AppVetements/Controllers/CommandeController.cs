@@ -83,39 +83,76 @@ namespace AppVetements.Controllers
             await _db.SaveChangesAsync();
 
             // Vider le panier
+            // Vider le panier
             HttpContext.Session.Remove(CLE_PANIER);
 
-            // Envoyer email
+            // Envoyer email client
             var client = await _db.Clients.FindAsync(clientID);
             try
             {
                 GMailer.GmailUsername = _config["EmailSettings:Email"];
                 GMailer.GmailPassword = _config["EmailSettings:PasswordEmail"];
 
-                string sujet = $"✅ Confirmation commande #{commande.ID} - ModaSen";
+                string sujet = $"Confirmation commande #{commande.ID} - ModaSen";
                 string body = $@"
-                <div style='font-family:Segoe UI; max-width:600px; margin:auto;'>
-                    <div style='background:#1a1a2e; padding:30px; text-align:center;'>
-                        <h1 style='color:#f0a500;'>👗 ModaSen</h1>
-                    </div>
-                    <div style='padding:30px; background:#f9f9f9;'>
-                        <h2>Bonjour {client.NomComplet} !</h2>
-                        <p>Votre commande a été confirmée avec succès.</p>
-                        <div style='background:white; border-radius:15px; padding:20px;'>
-                            <p><strong>Numéro :</strong> #{commande.ID}</p>
-                            <p><strong>Total :</strong> {commande.Total.ToString("N0")} FCFA</p>
-                            <p><strong>Statut :</strong> ⏳ En attente</p>
-                        </div>
-                        <p>Merci de votre confiance !</p>
-                    </div>
-                    <div style='background:#1a1a2e; padding:20px; text-align:center;'>
-                        <p style='color:#888;'>© 2026 ModaSen — Dakar, Sénégal</p>
-                    </div>
-                </div>";
+    <div style='font-family:Segoe UI; max-width:600px; margin:auto;'>
+        <div style='background:#1a1a2e; padding:30px; text-align:center;'>
+            <h1 style='color:#f0a500;'>ModaSen</h1>
+        </div>
+        <div style='padding:30px; background:#f9f9f9;'>
+            <h2>Bonjour {client.NomComplet} !</h2>
+            <p>Votre commande a ete confirmee avec succes.</p>
+            <div style='background:white; border-radius:15px; padding:20px;'>
+                <p><strong>Numero :</strong> #{commande.ID}</p>
+                <p><strong>Total :</strong> {commande.Total.ToString("N0")} FCFA</p>
+                <p><strong>Statut :</strong> En attente</p>
+            </div>
+            <p>Merci de votre confiance !</p>
+        </div>
+        <div style='background:#1a1a2e; padding:20px; text-align:center;'>
+            <p style='color:#888;'>2026 ModaSen - Dakar, Senegal</p>
+        </div>
+    </div>";
 
                 GMailer.SendMail(client.Email, sujet, body);
             }
-            catch { /* Si email échoue, la commande continue */ }
+            catch { }
+
+            // ✅ Email notification admin ICI avant le return
+            try
+            {
+                string sujetAdmin = $"Nouvelle commande #{commande.ID} - ModaSen";
+                string bodyAdmin = $@"
+    <div style='font-family:Segoe UI; max-width:600px; margin:auto;'>
+        <div style='background:#1a1a2e; padding:30px; text-align:center;'>
+            <h1 style='color:#f0a500;'>ModaSen - Nouvelle Commande</h1>
+        </div>
+        <div style='padding:30px; background:#f9f9f9;'>
+            <h2>Nouvelle commande recue !</h2>
+            <div style='background:white; border-radius:15px; padding:20px;'>
+                <p><strong>Numero :</strong> #{commande.ID}</p>
+                <p><strong>Client :</strong> {client.NomComplet}</p>
+                <p><strong>Email :</strong> {client.Email}</p>
+                <p><strong>Telephone :</strong> {client.Telephone}</p>
+                <p><strong>Total :</strong> {commande.Total.ToString("N0")} FCFA</p>
+                <p><strong>Date :</strong> {commande.DateCommande:dd/MM/yyyy HH:mm}</p>
+            </div>
+            <div style='text-align:center; margin-top:20px;'>
+                <a href='https://modasen-production.up.railway.app/Admin/Commandes'
+                   style='background:#f0a500; color:white; padding:15px 30px;
+                          border-radius:10px; text-decoration:none; font-weight:bold;'>
+                    Voir la commande
+                </a>
+            </div>
+        </div>
+        <div style='background:#1a1a2e; padding:20px; text-align:center;'>
+            <p style='color:#888;'>ModaSen Admin - 2026</p>
+        </div>
+    </div>";
+
+                GMailer.SendMail(_config["EmailSettings:Email"], sujetAdmin, bodyAdmin);
+            }
+            catch { }
 
             return RedirectToAction("Confirmation", new { id = commande.ID });
         }
