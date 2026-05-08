@@ -1,0 +1,106 @@
+﻿@model List<AppVetements.Models.PanierItem>
+@{
+    ViewData["Title"] = "Mon Panier";
+    var total = Model.Sum(p => p.Total);
+}
+
+<div class="container my-5">
+    <h2 class="fw-bold mb-4">🛒 Mon Panier (@Model.Count article(s))</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <div style="font-size:5rem;">🛒</div>
+            <h4 class="text-muted mt-3">Votre panier est vide</h4>
+            <a href="/Boutique/Index" class="btn btn-warning btn-lg mt-3 px-5">
+                Continuer les achats
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <!-- ARTICLES -->
+            <div class="col-md-8">
+                @foreach (var item in Model)
+                {
+                    <div class="card border-0 shadow-sm mb-3 p-3" style="border-radius:15px;">
+                        <div class="row align-items-center">
+                            <!-- IMAGE -->
+                            <div class="col-md-2">
+                                @if (!string.IsNullOrEmpty(item.ImageProduit))
+                                {
+                                    <img src="@item.ImageProduit"
+                                         style="width:80px; height:80px; object-fit:cover; border-radius:10px;" />
+                                }
+                            </div>
+                            <!-- NOM -->
+                            <div class="col-md-4">
+                                <h6 class="fw-bold">@item.NomProduit</h6>
+                                <p style="color:#f0a500;" class="fw-bold">@item.Prix.ToString("N0") FCFA</p>
+                            </div>
+                            <!-- QUANTITE -->
+                            <div class="col-md-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="/Panier/Diminuer/@item.ProduitID"
+                                       class="btn btn-outline-dark btn-sm">−</a>
+                                    <span class="fw-bold fs-5">@item.Quantite</span>
+                                    <a href="/Panier/Augmenter/@item.ProduitID"
+                                       class="btn btn-outline-dark btn-sm">+</a>
+                                </div>
+                            </div>
+                            <!-- TOTAL -->
+                            <div class="col-md-2">
+                                <h6 class="fw-bold">@item.Total.ToString("N0") FCFA</h6>
+                            </div>
+                            <!-- SUPPRIMER -->
+                            <div class="col-md-1">
+                                <a href="/Panier/Supprimer/@item.ProduitID"
+                                   class="btn btn-danger btn-sm"><i class="bi bi-trash3-fill"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="d-flex gap-3 mt-3">
+                    <a href="/Boutique/Index" class="btn btn-outline-dark">
+                        ← Continuer les achats
+                    </a>
+                    <a href="/Panier/Vider" class="btn btn-outline-danger"
+                           onclick="return confirm('Vider le panier ?')">
+                        <i class="bi bi-cart-x" style="font-size:5rem; color:#ccc;"></i> Vider le panier
+                    </a>
+                </div>
+            </div>
+
+            <!-- RESUME COMMANDE -->
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm p-4" style="border-radius:15px; position:sticky; top:80px;">
+                    <h5 class="fw-bold mb-3">📋 Résumé</h5>
+                    <hr />
+                    @foreach (var item in Model)
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted small">@item.NomProduit x@item.Quantite</span>
+                            <span class="small">@item.Total.ToString("N0")</span>
+                        </div>
+                    }
+                    <hr />
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Livraison</span>
+                        <span class="text-success">Gratuite</span>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 class="fw-bold">Total</h5>
+                        <h5 style="color:#f0a500;" class="fw-bold">@total.ToString("N0") FCFA</h5>
+                    </div>
+                    <a href="/Commande/Passer"
+                           class="btn btn-warning w-100 fw-bold btn-lg">
+                        ✅ Passer la commande
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,220 @@
+﻿@{
+    ViewData["Title"] = "Accueil";
+}
+
+<!-- HERO -->
+<!-- HERO -->
+<div style="
+    background-image: url('/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    display:flex;
+    align-items:center;
+    position:relative;">
+
+    <!-- OVERLAY SOMBRE -->
+    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);"></div>
+
+    <div class="container text-white text-center" style="position:relative; z-index:1;">
+        <p style="color:#f0a500; font-size:1.1rem; letter-spacing:3px; text-transform:uppercase;">Bienvenue sur ModaSen</p>
+        <h1 style="font-size:3.5rem; font-weight:900; line-height:1.2;">La Mode Africaine<br /><span style="color:#f0a500;">à Votre Portée</span></h1>
+        <p style="color:#ddd; font-size:1.2rem; margin:20px 0;">Découvrez les plus belles tenues du Sénégal</p>
+        <div class="mt-4">
+            <a href="/Boutique/Index" style="background:#f0a500; color:white; padding:15px 40px; border-radius:30px; text-decoration:none; font-weight:bold; font-size:1.1rem; margin-right:15px;">
+                🛍️ Acheter Maintenant
+            </a>
+            <a href="/Auth/Register" style="border:2px solid white; color:white; padding:15px 40px; border-radius:30px; text-decoration:none; font-weight:bold; font-size:1.1rem;">
+                Créer un compte
+            </a>
+        </div>
+    </div>
+</div>
+<!-- STATS -->
+<div style="background:#f0a500;">
+    <div class="container">
+        <div class="row text-white text-center py-3">
+            <div class="col-md-3 py-2">
+                <h3 class="fw-bold">500+</h3>
+                <p>Produits disponibles</p>
+            </div>
+            <div class="col-md-3 py-2">
+                <h3 class="fw-bold">1000+</h3>
+                <p>Clients satisfaits</p>
+            </div>
+            <div class="col-md-3 py-2">
+                <h3 class="fw-bold">4</h3>
+                <p>Catégories</p>
+            </div>
+            <div class="col-md-3 py-2">
+                <h3 class="fw-bold">24/7</h3>
+                <p>Service client</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Nos Catégories</h2>
+        <p class="text-muted">Trouvez ce qui vous convient</p>
+    </div>
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <a href="/Boutique/Index?categorie=1" style="text-decoration:none;">
+                <div class="card border-0 shadow-sm overflow-hidden" style="border-radius:20px; transition:0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <img src="/images/vetement homme.jpg"
+                         style="width:100%; height:200px; object-fit:cover;" />
+                    <div class="text-center p-3">
+                        <h5 class="fw-bold">Homme</h5>
+                        <p class="text-muted small">Chemises, Pantalons...</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-4">
+            <a href="/Boutique/Index?categorie=2" style="text-decoration:none;">
+                <div class="card border-0 shadow-sm overflow-hidden" style="border-radius:20px; transition:0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <img src="/images/vetement femme.jpg"
+                         style="width:100%; height:200px; object-fit:cover;" />
+                    <div class="text-center p-3">
+                        <h5 class="fw-bold">Femme</h5>
+                        <p class="text-muted small">Robes, Boubous...</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-4">
+            <a href="/Boutique/Index?categorie=3" style="text-decoration:none;">
+                <div class="card border-0 shadow-sm overflow-hidden" style="border-radius:20px; transition:0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <img src="/images/vetement bebe.jpg"
+                         style="width:100%; height:200px; object-fit:cover;" />
+                    <div class="text-center p-3">
+                        <h5 class="fw-bold">Enfant</h5>
+                        <p class="text-muted small">Tenues enfants...</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-4">
+            <a href="/Boutique/Index?categorie=4" style="text-decoration:none;">
+                <div class="card border-0 shadow-sm overflow-hidden" style="border-radius:20px; transition:0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <img src="/images/accessoire.jpg"
+                         style="width:100%; height:200px; object-fit:cover;" />
+                    <div class="text-center p-3">
+                        <h5 class="fw-bold">Accessoires</h5>
+                        <p class="text-muted small">Sacs, Bijoux...</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- AVANTAGES -->
+<div style="background:#f8f9fa;" class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div style="font-size:3rem;"><i class="bi bi-truck" style="font-size:3rem; color:#f0a500;"></i></div>
+                <h5 class="fw-bold mt-2">Livraison Rapide</h5>
+                <p class="text-muted">Partout au Sénégal en 24-48h</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div style="font-size:3rem;"><i class="bi bi-patch-check-fill" style="font-size:3rem; color:#f0a500;"></i></div>
+                <h5 class="fw-bold mt-2">Qualité Garantie</h5>
+                <p class="text-muted">Tous nos produits sont vérifiés</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div style="font-size:3rem;"><i class="bi bi-shield-lock-fill" style="font-size:3rem; color:#f0a500;"></i></div>
+                <h5 class="fw-bold mt-2">Paiement Sécurisé</h5>
+                <p class="text-muted">Wave, Orange Money acceptés</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PROMOTIONS (affichée seulement s'il y a des promos) -->
+@if (ViewBag.ProduitsEnPromo != null && ViewBag.ProduitsEnPromo.Count > 0)
+{
+    <div class="container my-5">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">🔥 Promotions en cours</h2>
+            <p class="text-muted">Profitez de nos meilleures offres</p>
+        </div>
+        <div class="row">
+            @foreach (var p in ViewBag.ProduitsEnPromo)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card border-0 shadow-sm h-100"
+                         style="border-radius:15px; overflow:hidden;">
+                        <!-- BADGE PROMO -->
+                        <div style="position:relative;">
+                            @if (!string.IsNullOrEmpty(p.ImageProduit))
+                            {
+                                <img src="@p.ImageProduit"
+                                     style="width:100%; height:220px; object-fit:cover;" />
+                            }
+                            <span style="position:absolute; top:10px; left:10px;
+                                background:#e53935; color:white; padding:5px 12px;
+                                border-radius:10px; font-weight:bold;">
+                                -@p.Remise%
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="fw-bold">@p.NomProduit</h6>
+                            <p class="text-muted text-decoration-line-through small">
+                                @p.Prix.ToString("N0") FCFA
+                            </p>
+                            <h5 style="color:#e53935;" class="fw-bold">
+                                @p.PrixPromo.ToString("N0") FCFA
+                            </h5>
+                            <a href="/Boutique/Detail/@p.ID"
+                                   class="btn btn-warning w-100 fw-bold mt-2">
+                                Voir le produit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="text-center mt-3">
+            <a href="/Boutique/Index" class="btn btn-outline-danger px-5 fw-bold">
+                Voir toutes les promos
+            </a>
+        </div>
+    </div>
+}
+<!-- FOOTER -->
+<footer style="background:#1a1a2e;" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h4 style="color:#f0a500;">ModaSen</h4>
+                <p style="color:#aaaaaa;">La mode africaine moderne à votre portée.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h6 style="color:white;" class="fw-bold">Liens rapides</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="/" style="color:#aaaaaa; text-decoration:none;">Accueil</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/Boutique/Index" style="color:#aaaaaa; text-decoration:none;">Boutique</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/Auth/Login" style="color:#aaaaaa; text-decoration:none;">Connexion</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h6 style="color:white;" class="fw-bold">Contact</h6>
+                <p style="color:#aaaaaa;">Dakar, Sénégal</p>
+                <p style="color:#aaaaaa;">+221 77 000 00 00</p>
+                <p style="color:#aaaaaa;">contact@modasen.sn</p>
+            </div>
+        </div>
+        <hr style="border-color:#333333;" />
+        <p style="color:#aaaaaa;" class="text-center">© 2026 ModaSen — Tous droits réservés</p>
+    </div>
+</footer>

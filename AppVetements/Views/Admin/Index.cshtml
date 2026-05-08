@@ -1,0 +1,121 @@
+﻿@model List<AppVetements.Models.Commande>
+@{
+    ViewData["Title"] = "Dashboard Admin";
+}
+
+<div class="container-fluid my-4">
+    <h2 class="fw-bold mb-4">
+        <i class="bi bi-speedometer2"></i> Dashboard
+    </h2>
+
+    <!-- STATS -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm p-4 text-center" style="border-radius:15px; border-left:5px solid #f0a500 !important;">
+                <i class="bi bi-bag-fill" style="font-size:2rem; color:#f0a500;"></i>
+                <h3 class="fw-bold mt-2">@ViewBag.TotalProduits</h3>
+                <p class="text-muted">Produits</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm p-4 text-center" style="border-radius:15px;">
+                <i class="bi bi-people-fill" style="font-size:2rem; color:#1a1a2e;"></i>
+                <h3 class="fw-bold mt-2">@ViewBag.TotalClients</h3>
+                <p class="text-muted">Clients</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm p-4 text-center" style="border-radius:15px;">
+                <i class="bi bi-cart-check-fill" style="font-size:2rem; color:green;"></i>
+                <h3 class="fw-bold mt-2">@ViewBag.TotalCommandes</h3>
+                <p class="text-muted">Commandes</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm p-4 text-center" style="border-radius:15px;">
+                <i class="bi bi-cash-stack" style="font-size:2rem; color:#28a745;"></i>
+                <h3 class="fw-bold mt-2">@ViewBag.TotalRevenu.ToString("N0")</h3>
+                <p class="text-muted">Revenu (FCFA)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MENU ADMIN -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <a href="/Admin/Commandes" class="text-decoration-none">
+                <div class="card border-0 shadow-sm p-3 text-center" style="border-radius:15px;">
+                    <i class="bi bi-list-ul" style="font-size:2rem; color:#f0a500;"></i>
+                    <h6 class="fw-bold mt-2">Commandes</h6>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="/Produit/Index" class="text-decoration-none">
+                <div class="card border-0 shadow-sm p-3 text-center" style="border-radius:15px;">
+                    <i class="bi bi-bag-fill" style="font-size:2rem; color:#1a1a2e;"></i>
+                    <h6 class="fw-bold mt-2">Produits</h6>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="/Admin/Clients" class="text-decoration-none">
+                <div class="card border-0 shadow-sm p-3 text-center" style="border-radius:15px;">
+                    <i class="bi bi-people-fill" style="font-size:2rem; color:green;"></i>
+                    <h6 class="fw-bold mt-2">Clients</h6>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="/Categorie/Index" class="text-decoration-none">
+                <div class="card border-0 shadow-sm p-3 text-center" style="border-radius:15px;">
+                    <i class="bi bi-grid-fill" style="font-size:2rem; color:purple;"></i>
+                    <h6 class="fw-bold mt-2">Catégories</h6>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- DERNIERES COMMANDES -->
+    <div class="card border-0 shadow-sm p-4" style="border-radius:15px;">
+        <h5 class="fw-bold mb-3">
+            <i class="bi bi-clock-history"></i> Dernières commandes
+        </h5>
+        <table class="table table-hover">
+            <thead style="background:#1a1a2e; color:white;">
+                <tr>
+                    <th>#</th>
+                    <th>Client</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model)
+                {
+                    <tr>
+                        <td>#@c.ID</td>
+                        <td>@c.Client?.NomComplet</td>
+                        <td>@c.DateCommande.ToString("dd/MM/yyyy")</td>
+                        <td style="color:#f0a500;">@c.Total.ToString("N0") FCFA</td>
+                        <td>
+                            @if (c.Statut == "En attente")
+                            {
+                                <span class="badge bg-warning text-dark">⏳ @c.Statut</span>
+                            }
+                            else if (c.Statut == "Livré")
+                            {
+                                <span class="badge bg-success">✅ @c.Statut</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-info">🚚 @c.Statut</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

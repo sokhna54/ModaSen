@@ -1,0 +1,48 @@
+﻿@model List<AppVetements.Models.Commande>
+@{
+    ViewData["Title"] = "Gestion Commandes";
+}
+<a href="/Admin/Index" class="btn btn-dark mb-3">
+    <i class="bi bi-arrow-left"></i> Retour Dashboard
+</a>
+<div class="container-fluid my-4">
+    <h2 class="fw-bold mb-4">
+        <i class="bi bi-list-ul"></i> Gestion des Commandes
+    </h2>
+
+    @foreach (var commande in Model)
+    {
+        <div class="card border-0 shadow-sm mb-4 p-4" style="border-radius:15px;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h6 class="fw-bold">Commande #@commande.ID</h6>
+                    <small class="text-muted">
+                        @commande.Client?.NomComplet — @commande.DateCommande.ToString("dd/MM/yyyy HH:mm")
+                    </small>
+                </div>
+                <div class="d-flex gap-2 align-items-center">
+                    <!-- CHANGER STATUT -->
+                    <a href="/Admin/ChangerStatut/@commande.ID?statut=En attente"
+                       class="btn btn-warning btn-sm">⏳ En attente</a>
+                    <a href="/Admin/ChangerStatut/@commande.ID?statut=En livraison"
+                       class="btn btn-info btn-sm text-white">🚚 En livraison</a>
+                    <a href="/Admin/ChangerStatut/@commande.ID?statut=Livré"
+                       class="btn btn-success btn-sm">✅ Livré</a>
+                </div>
+            </div>
+
+            @foreach (var ligne in commande.LignesCommande)
+            {
+                <div class="d-flex justify-content-between py-2 border-bottom">
+                    <span>@ligne.Produit?.NomProduit x@ligne.Quantite</span>
+                    <span>@((ligne.PrixUnitaire * ligne.Quantite).ToString("N0")) FCFA</span>
+                </div>
+            }
+
+            <div class="d-flex justify-content-between mt-3">
+                <strong>Total</strong>
+                <strong style="color:#f0a500;">@commande.Total.ToString("N0") FCFA</strong>
+            </div>
+        </div>
+    }
+</div>

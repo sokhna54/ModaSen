@@ -1,0 +1,12 @@
+﻿@model AppVetements.Models.Categorie
+
+<h2>Ajouter une Catégorie</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label>Nom de la catégorie</label>
+        <input asp-for="NomCategorie" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a href="/Categorie/Index" class="btn btn-secondary">Annuler</a>
+</form>

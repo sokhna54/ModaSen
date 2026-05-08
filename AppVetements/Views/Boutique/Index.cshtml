@@ -1,0 +1,109 @@
+﻿@model List<AppVetements.Models.Produit>
+@{
+    ViewData["Title"] = "Boutique";
+}
+
+<!-- BARRE RECHERCHE -->
+<div style="background:#1a1a2e; padding:20px 0;">
+    <div class="container">
+        <form method="get" class="d-flex">
+            <input type="text" name="recherche" value="@ViewBag.Recherche"
+                   class="form-control form-control-lg me-2"
+                   placeholder="🔍 Rechercher un produit..." />
+            <button type="submit" class="btn btn-warning px-4 fw-bold">Chercher</button>
+        </form>
+    </div>
+</div>
+
+<div class="container-fluid mt-4">
+    <div class="row">
+
+        <!-- SIDEBAR CATEGORIES -->
+        <div class="col-md-2">
+            <div class="card border-0 shadow-sm p-3" style="border-radius:15px;">
+                <h6 class="fw-bold mb-3">📂 Catégories</h6>
+                <a href="/Boutique/Index" class="d-block py-2 text-decoration-none @(ViewBag.CategorieSelectionnee == null ? "text-warning fw-bold" : "text-dark")">
+                    Tout voir
+                </a>
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    <a href="/Boutique/Index?categorie=@cat.ID"
+                           class="d-block py-2 text-decoration-none @(ViewBag.CategorieSelectionnee == cat.ID ? "text-warning fw-bold" : "text-dark")">
+                        @cat.NomCategorie
+                    </a>
+                }
+            </div>
+        </div>
+
+        <!-- PRODUITS -->
+        <div class="col-md-10">
+            <div class="row">
+                @if (!Model.Any())
+                {
+                    <div class="text-center py-5">
+                        <h4 class="text-muted">Aucun produit trouvé</h4>
+                    </div>
+                }
+                @foreach (var p in Model)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="card border-0 shadow-sm h-100"
+                             style="border-radius:15px; transition:0.3s; overflow:hidden;"
+                             onmouseover="this.style.transform='translateY(-5px)'"
+                             onmouseout="this.style.transform='translateY(0)'">
+
+                            <!-- IMAGE -->
+                            <div style="position:relative; overflow:hidden; height:220px;">
+                                @if (!string.IsNullOrEmpty(p.ImageProduit))
+                                {
+                                    <img src="@p.ImageProduit"
+                                         style="width:100%; height:100%; object-fit:cover;" />
+                                }
+                                else
+                                {
+                                    <div style="width:100%; height:100%; background:#f0f0f0; display:flex; align-items:center; justify-content:center;">
+                                        <span style="font-size:4rem;">👕</span>
+                                    </div>
+                                }
+                                <!-- BADGE STOCK -->
+                                @if (p.Stock <= 5)
+                                {
+                                    <span style="position:absolute; top:10px; left:10px; background:red; color:white; padding:3px 10px; border-radius:10px; font-size:0.8rem;">
+                                        Stock limité
+                                    </span>
+                                }
+                            </div>
+
+                            <div class="card-body d-flex flex-column">
+                                <p class="text-muted small mb-1">@p.Categorie?.NomCategorie</p>
+                                <h6 class="fw-bold">@p.NomProduit</h6>
+                                <!-- PRIX -->
+                                @if (p.EnPromo)
+                                {
+                                    <p class="text-muted text-decoration-line-through small">@p.Prix.ToString("N0") FCFA</p>
+                                    <h5 style="color:#e53935;" class="fw-bold">@p.PrixPromo.ToString("N0") FCFA</h5>
+                                    <span class="badge bg-danger">-@p.Remise%</span>
+                                }
+                                else
+                                {
+                                    <h5 style="color:#f0a500;" class="fw-bold">@p.Prix.ToString("N0") FCFA</h5>
+                                }
+
+                                <div class="mt-3 d-flex gap-2">
+                                    <a href="/Boutique/Detail/@p.ID"
+                                           class="btn btn-outline-dark btn-sm flex-fill">
+                                        👁️ Détail
+                                    </a>
+                                    <a href="/Panier/Ajouter/@p.ID"
+                                           class="btn btn-warning btn-sm flex-fill fw-bold">
+                                        🛒 Ajouter
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

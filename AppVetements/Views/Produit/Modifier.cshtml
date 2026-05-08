@@ -1,0 +1,48 @@
+﻿@model AppVetements.Models.Produit
+<a href="/Produit/Index" class="btn btn-secondary">
+    <i class="bi bi-arrow-left"></i> Retour
+</a>
+<h2>Modifier le Produit</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <input asp-for="ID" type="hidden" />
+    <div class="mb-3">
+        <label>Nom du produit</label>
+        <input asp-for="NomProduit" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Prix (FCFA)</label>
+        <input asp-for="Prix" class="form-control" type="number" required />
+    </div>
+    <div class="mb-3">
+        <label>Stock</label>
+        <input asp-for="Stock" class="form-control" type="number" required />
+    </div>
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label>Catégorie</label>
+        <select asp-for="CategorieID" asp-items="ViewBag.Categories" class="form-control">
+            <option value="">-- Choisir --</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Image actuelle</label><br />
+        @if (!string.IsNullOrEmpty(Model.ImageProduit))
+        {
+            <img src="@Model.ImageProduit" width="80" height="80" style="object-fit:cover;" />
+        }
+    </div>
+    <div class="mb-3">
+        <label>Nouvelle image (optionnel)</label>
+        <input type="file" name="image" class="form-control" accept="image/*" />
+    </div>
+    <div class="mb-3">
+        <label>Remise (%) — 0 si pas de promo</label>
+        <input asp-for="Remise" class="form-control" type="number" min="0" max="100" />
+    </div>
+    <button type="submit" class="btn btn-warning">Modifier</button>
+    <a href="/Produit/Index" class="btn btn-secondary">Annuler</a>
+</form>

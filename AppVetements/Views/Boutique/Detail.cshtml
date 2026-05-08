@@ -1,0 +1,173 @@
+﻿@model AppVetements.Models.Produit
+@{
+    ViewData["Title"] = @Model.NomProduit;
+}
+
+<div class="container my-5">
+    <div class="row">
+        <!-- IMAGE -->
+        <div class="col-md-5">
+            @if (!string.IsNullOrEmpty(Model.ImageProduit))
+            {
+                <img src="@Model.ImageProduit"
+                     style="width:100%; border-radius:20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" />
+            }
+            else
+            {
+                <div style="width:100%; height:400px; background:#f0f0f0; border-radius:20px; display:flex; align-items:center; justify-content:center;">
+                    <span style="font-size:6rem;">👕</span>
+                </div>
+            }
+        </div>
+
+        <!-- DETAILS -->
+        <div class="col-md-7">
+            <p class="text-muted">
+                <a href="/Boutique/Index">Boutique</a> →
+                <a href="/Boutique/Index?categorie=@Model.CategorieID">@Model.Categorie?.NomCategorie</a>
+            </p>
+            <h2 class="fw-bold">@Model.NomProduit</h2>
+
+            <!-- ETOILES -->
+            <div class="my-2">
+                <span style="color:#f0a500;">★★★★☆</span>
+                <span class="text-muted small ms-2">(24 avis)</span>
+            </div>
+
+            <hr />
+
+            <!-- PRIX -->
+            <!-- PRIX -->
+            @if (Model.EnPromo)
+            {
+                <p class="text-muted text-decoration-line-through">@Model.Prix.ToString("N0") FCFA</p>
+                <h2 style="color:#e53935;" class="fw-bold">@Model.PrixPromo.ToString("N0") FCFA</h2>
+                <span class="badge bg-danger fs-6">-@Model.Remise% de réduction</span>
+            }
+            else
+            {
+                <h2 style="color:#f0a500;" class="fw-bold">@Model.Prix.ToString("N0") FCFA</h2>
+            }
+
+            <!-- STOCK -->
+            <div class="my-3">
+                @if (Model.Stock > 0)
+                {
+                    <span class="badge bg-success p-2">✅ En stock (@Model.Stock disponibles)</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger p-2">❌ Rupture de stock</span>
+                }
+            </div>
+
+            <hr />
+
+            <!-- DESCRIPTION -->
+            <h6 class="fw-bold">Description :</h6>
+            <p class="text-muted">@Model.Description</p>
+
+            <hr />
+
+            <!-- TAILLE -->
+            <h6 class="fw-bold">Choisir une taille :</h6>
+            <div class="d-flex gap-2 mb-3">
+                @foreach (var taille in new[] { "XS", "S", "M", "L", "XL", "XXL" })
+                {
+                    <button class="btn btn-outline-dark btn-sm taille-btn"
+                            onclick="selectTaille(this)">
+                        @taille
+                    </button>
+                }
+            </div>
+
+            <hr />
+
+            <!-- QUANTITE -->
+            <h6 class="fw-bold">Quantité :</h6>
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <button class="btn btn-outline-dark" onclick="changerQte(-1)">−</button>
+                <span id="qte" class="fw-bold fs-4">1</span>
+                <button class="btn btn-outline-dark" onclick="changerQte(1)">+</button>
+            </div>
+
+            <!-- BOUTONS -->
+            <div class="d-flex gap-3">
+                <a href="/Panier/Ajouter/@Model.ID"
+                       class="btn btn-warning btn-lg fw-bold px-5 flex-fill">
+                    🛒 Ajouter au panier
+                </a>
+                <a href="/Commande/Passer"
+                       class="btn btn-dark btn-lg fw-bold px-5 flex-fill">
+                    ⚡ Acheter maintenant
+                </a>
+            </div>
+
+            <hr />
+
+            <!-- AVANTAGES -->
+            <div class="row text-center mt-3">
+                <div class="col-4">
+                    <i class="fas fa-truck text-success fs-4"></i>
+                    <p class="small text-muted mt-1">Livraison gratuite</p>
+                </div>
+                <div class="col-4">
+                    <i class="fas fa-undo text-primary fs-4"></i>
+                    <p class="small text-muted mt-1">Retour 7 jours</p>
+                </div>
+                <div class="col-4">
+                    <i class="fas fa-shield-alt text-warning fs-4"></i>
+                    <p class="small text-muted mt-1">Qualité garantie</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AVIS CLIENTS -->
+    <div class="mt-5">
+        <h4 class="fw-bold">⭐ Avis Clients</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm p-3" style="border-radius:15px;">
+                    <div style="color:#f0a500;">★★★★★</div>
+                    <p class="mt-2">"Très belle qualité, je suis satisfait !"</p>
+                    <p class="text-muted small">— Amadou D. · il y a 2 jours</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm p-3" style="border-radius:15px;">
+                    <div style="color:#f0a500;">★★★★☆</div>
+                    <p class="mt-2">"Livraison rapide et produit conforme."</p>
+                    <p class="text-muted small">— Fatou S. · il y a 5 jours</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm p-3" style="border-radius:15px;">
+                    <div style="color:#f0a500;">★★★★★</div>
+                    <p class="mt-2">"Excellent produit, je recommande !"</p>
+                    <p class="text-muted small">— Moussa K. · il y a 1 semaine</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changerQte(val) {
+        var qte = parseInt(document.getElementById('qte').innerText);
+        qte += val;
+        if (qte < 1) qte = 1;
+        if (qte > @Model.Stock) qte = @Model.Stock;
+        document.getElementById('qte').innerText = qte;
+    }
+
+    function selectTaille(btn) {
+        document.querySelectorAll('.taille-btn').forEach(b => {
+            b.classList.remove('btn-dark');
+            b.classList.add('btn-outline-dark');
+        });
+        btn.classList.remove('btn-outline-dark');
+        btn.classList.add('btn-dark');
+    }
+</script>

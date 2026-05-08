@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Connexion";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white text-center">
+                <h4>🔐 Connexion</h4>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.Erreur != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.Erreur</div>
+                }
+                <form method="post">
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Mot de passe</label>
+                        <input type="password" name="motDePasse" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100">Se connecter</button>
+                </form>
+                <hr />
+                <p class="text-center">Pas encore de compte ? 
+                    <a href="/Auth/Register">S'inscrire</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+﻿@model AppVetements.Models.Client
+@{
+    ViewData["Title"] = "Passer la commande";
+    var panier = ViewBag.Panier as List<AppVetements.Models.PanierItem>;
+    var total = ViewBag.Total;
+}
+
+<div class="container my-5">
+    <h2 class="fw-bold mb-4">✅ Finaliser la commande</h2>
+
+    <div class="row">
+        <!-- FORMULAIRE -->
+        <div class="col-md-7">
+            <div class="card border-0 shadow-sm p-4 mb-4" style="border-radius:15px;">
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-person-fill"></i> Informations client
+                </h5>
+                <div class="mb-2">
+                    <span class="text-muted">Nom :</span>
+                    <strong> @Model.NomComplet</strong>
+                </div>
+                <div class="mb-2">
+                    <span class="text-muted">Email :</span>
+                    <strong> @Model.Email</strong>
+                </div>
+                <div class="mb-2">
+                    <span class="text-muted">Téléphone :</span>
+                    <strong> @Model.Telephone</strong>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4" style="border-radius:15px;">
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-geo-alt-fill"></i> Adresse de livraison
+                </h5>
+                <form method="post" action="/Commande/Confirmer">
+                    <div class="mb-3">
+                        <textarea name="adresseLivraison" class="form-control" rows="3"
+                                  placeholder="Entrez votre adresse complète..." required>@Model.Adresse</textarea>
+                    </div>
+
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-credit-card-fill"></i> Mode de paiement
+                    </h5>
+                    <div class="mb-2">
+                        <input type="radio" name="paiement" value="wave" checked />
+                        <label>Wave</label>
+                    </div>
+                    <div class="mb-2">
+                        <input type="radio" name="paiement" value="orange" />
+                        <label>Orange Money</label>
+                    </div>
+                    <div class="mb-2">
+                        <input type="radio" name="paiement" value="livraison" />
+                        <label>Paiement à la livraison</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold mt-3">
+                        <i class="bi bi-check-circle-fill"></i> Confirmer la commande
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- RESUME -->
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm p-4" style="border-radius:15px;">
+                <h5 class="fw-bold mb-3">🛒 Récapitulatif</h5>
+                <hr />
+                @foreach (var item in panier)
+                {
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>@item.NomProduit x@item.Quantite</span>
+                        <span class="fw-bold">@item.Total.ToString("N0") FCFA</span>
+                    </div>
+                }
+                <hr />
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Livraison</span>
+                    <span class="text-success fw-bold">Gratuite</span>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <h5 class="fw-bold">Total</h5>
+                    <h5 style="color:#f0a500;" class="fw-bold">@total.ToString("N0") FCFA</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

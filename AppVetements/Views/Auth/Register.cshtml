@@ -1,0 +1,47 @@
+﻿@model AppVetements.Models.Client
+@{
+    ViewData["Title"] = "Inscription";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h4>📝 Créer un compte</h4>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.Erreur != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.Erreur</div>
+                }
+                <form method="post">
+                    <div class="mb-3">
+                        <label>Nom complet</label>
+                        <input asp-for="NomComplet" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input asp-for="Email" type="email" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Téléphone</label>
+                        <input asp-for="Telephone" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Adresse</label>
+                        <input asp-for="Adresse" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Mot de passe</label>
+                        <input asp-for="MotDePasse" type="password" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">S'inscrire</button>
+                </form>
+                <hr />
+                <p class="text-center">Déjà un compte ? 
+                    <a href="/Auth/Login">Se connecter</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
